@@ -855,15 +855,15 @@
         min-height: 100dvh;
         min-height: -webkit-fill-available;
       }
-      .hero-eyebrow { font-size: 0.55rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
+      .hero-eyebrow { font-size: 0.6rem; letter-spacing: 2.5px; margin-bottom: 1rem; }
       .hero-eyebrow::before { width: 24px; }
-      .hero-logo-wrap { margin-bottom: 1.5rem; }
+      .hero-logo-wrap { margin-bottom: 1.2rem; }
       .hero-logo { width: 90px; height: 90px; }
       .hero h1 {
-        font-size: clamp(2rem, 10vw, 3rem);
+        font-size: clamp(1.7rem, 8vw, 2.4rem);
         letter-spacing: -0.5px;
-        line-height: 0.95;
-        margin-bottom: 1.5rem;
+        line-height: 0.92;
+        margin-bottom: 1.2rem;
         word-break: break-word;
         overflow-wrap: break-word;
         text-wrap: balance;
@@ -877,7 +877,7 @@
       .hero-desc {
         font-size: 0.85rem;
         max-width: 100%;
-        line-height: 1.6;
+        line-height: 1.7;
       }
       .hero-cta-wrap {
         flex-direction: column;
@@ -898,7 +898,7 @@
       .section-label { font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 1rem; }
       .section-title {
         font-size: clamp(1.8rem, 7vw, 2.5rem);
-        letter-spacing: -0.5px;
+        letter-spacing: 0;
       }
 
       /* SOBRE */
@@ -977,9 +977,10 @@
     @media (max-width: 375px) {
       .hero { padding: 4rem 1rem 2.5rem; }
       .hero-logo { width: 65px; height: 65px; }
-      .hero-logo-wrap { margin-bottom: 1rem; }
-      .hero h1 { font-size: 1.8rem; letter-spacing: 0; }
-      .hero-desc { font-size: 0.8rem; }
+      .hero-logo-wrap { margin-bottom: 0.8rem; }
+      .hero h1 { font-size: 1.6rem; letter-spacing: -0.3px; line-height: 0.92; margin-bottom: 1rem; }
+      .hero-eyebrow { font-size: 0.55rem; letter-spacing: 2px; margin-bottom: 0.8rem; }
+      .hero-desc { font-size: 0.78rem; line-height: 1.65; }
       .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .stat-num { font-size: 1.6rem; }
       .stat-label { font-size: 0.55rem; }
