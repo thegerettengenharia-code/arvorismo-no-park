@@ -287,6 +287,17 @@
       width: 40px; height: 1px;
       background: var(--laranja);
     }
+    .hero-logo-wrap {
+      margin-bottom: 2rem;
+    }
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--laranja);
+      box-shadow: 0 0 40px rgba(200,120,48,0.2);
+    }
     .hero h1 {
       font-family: 'Syne', sans-serif;
       font-size: clamp(3.5rem, 9vw, 8rem);
@@ -842,6 +853,8 @@
       }
       .hero-eyebrow { font-size: 0.55rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
       .hero-eyebrow::before { width: 24px; }
+      .hero-logo-wrap { margin-bottom: 1.5rem; }
+      .hero-logo { width: 90px; height: 90px; }
       .hero h1 {
         font-size: clamp(2.2rem, 11vw, 3.5rem);
         letter-spacing: -1px;
@@ -956,6 +969,8 @@
     /* SMALL PHONES */
     @media (max-width: 375px) {
       .hero { padding: 4.5rem 1rem 2.5rem; }
+      .hero-logo { width: 70px; height: 70px; }
+      .hero-logo-wrap { margin-bottom: 1.2rem; }
       .hero h1 { font-size: 2rem; }
       .hero-desc { font-size: 0.8rem; }
       .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
@@ -1007,6 +1022,9 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="hero-eyebrow" id="heroEyebrow">Segurança e aventura nas alturas</div>
+      <div class="hero-logo-wrap">
+        <img src="foto3.jpeg" alt="Arvorismo no Park" class="hero-logo">
+      </div>
       <h1 id="heroTitle">
         <span class="line"><span>Arvorismo</span></span>
         <span class="line"><span class="accent">no Park</span></span>
