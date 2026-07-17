@@ -834,24 +834,28 @@
 
       /* HERO */
       .hero {
-        padding: 0 1.2rem 3rem;
+        padding: 5rem 1.2rem 3rem;
         align-items: center;
+        justify-content: center;
         min-height: 100dvh;
         min-height: -webkit-fill-available;
       }
-      .hero-eyebrow { font-size: 0.6rem; letter-spacing: 3px; margin-bottom: 1rem; }
+      .hero-eyebrow { font-size: 0.55rem; letter-spacing: 3px; margin-bottom: 1.2rem; }
+      .hero-eyebrow::before { width: 24px; }
       .hero h1 {
-        font-size: clamp(2.8rem, 13vw, 4.5rem);
+        font-size: clamp(2.2rem, 11vw, 3.5rem);
         letter-spacing: -1px;
+        line-height: 0.95;
         margin-bottom: 1.5rem;
       }
       .hero-bottom {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        text-align: center;
         gap: 1.5rem;
       }
       .hero-desc {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         max-width: 100%;
         line-height: 1.6;
       }
@@ -951,7 +955,9 @@
 
     /* SMALL PHONES */
     @media (max-width: 375px) {
-      .hero h1 { font-size: 2.4rem; }
+      .hero { padding: 4.5rem 1rem 2.5rem; }
+      .hero h1 { font-size: 2rem; }
+      .hero-desc { font-size: 0.8rem; }
       .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .stat-num { font-size: 1.6rem; }
       .stat-label { font-size: 0.55rem; }
