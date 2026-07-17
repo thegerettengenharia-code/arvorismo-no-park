@@ -856,10 +856,13 @@
       .hero-logo-wrap { margin-bottom: 1.5rem; }
       .hero-logo { width: 90px; height: 90px; }
       .hero h1 {
-        font-size: clamp(2.2rem, 11vw, 3.5rem);
-        letter-spacing: -1px;
+        font-size: clamp(2rem, 10vw, 3rem);
+        letter-spacing: -0.5px;
         line-height: 0.95;
         margin-bottom: 1.5rem;
+        word-break: break-word;
+        overflow-wrap: break-word;
+        text-wrap: balance;
       }
       .hero-bottom {
         flex-direction: column;
@@ -968,10 +971,10 @@
 
     /* SMALL PHONES */
     @media (max-width: 375px) {
-      .hero { padding: 4.5rem 1rem 2.5rem; }
-      .hero-logo { width: 70px; height: 70px; }
-      .hero-logo-wrap { margin-bottom: 1.2rem; }
-      .hero h1 { font-size: 2rem; }
+      .hero { padding: 4rem 1rem 2.5rem; }
+      .hero-logo { width: 65px; height: 65px; }
+      .hero-logo-wrap { margin-bottom: 1rem; }
+      .hero h1 { font-size: 1.8rem; letter-spacing: 0; }
       .hero-desc { font-size: 0.8rem; }
       .stats-row { grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
       .stat-num { font-size: 1.6rem; }
