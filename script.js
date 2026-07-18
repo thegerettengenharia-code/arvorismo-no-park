@@ -8,27 +8,12 @@ gsap.registerPlugin(ScrollTrigger);
 var loader = document.getElementById('loader');
 var loaderLine = loader.querySelector('.loader-line');
 var loaderBrand = loader.querySelector('.loader-brand');
-var loaderAfter = loaderLine.querySelector('::after');
 
 window.addEventListener('load', function () {
-  // Animate brand text
   gsap.to(loaderBrand, { opacity: 1, duration: 0.4, delay: 0.2 });
 
-  // Animate line fill
-  gsap.to(loaderLine, {
-    '--fill': '100%',
-    duration: 1.5,
-    delay: 0.4,
-    ease: 'power2.inOut',
-    onUpdate: function () {
-      var progress = this.progress();
-      loaderLine.querySelector('::after') || (loaderLine.style.setProperty('--fill', (progress * 100) + '%'));
-    }
-  });
-
-  // Use a direct approach for the loader line
   var fillEl = document.createElement('div');
-  fillEl.style.cssText = 'position:absolute;left:0;top:0;height:100%;width:0%;background:var(--orange);transition:none;';
+  fillEl.style.cssText = 'position:absolute;left:0;top:0;height:100%;width:0%;background:var(--orange);';
   loaderLine.appendChild(fillEl);
 
   gsap.to(fillEl, {
@@ -133,7 +118,7 @@ function initMarquee() {
   tick();
 }
 
-/* FORM */
+/* FORM — redirect to WhatsApp */
 function initForm() {
   var form = document.getElementById('contactForm');
   if (!form) return;
@@ -142,27 +127,53 @@ function initForm() {
     e.preventDefault();
     var name = form.querySelector('input[name="name"]').value.trim();
     var email = form.querySelector('input[name="email"]').value.trim();
+    var phone = form.querySelector('input[name="phone"]').value.trim();
+    var msg = form.querySelector('textarea[name="message"]').value.trim();
     if (!name || !email) return;
+
+    var text = 'Olá! Gostaria de um orçamento.\n\n';
+    text += 'Nome: ' + name + '\n';
+    text += 'E-mail: ' + email + '\n';
+    if (phone) text += 'Telefone: ' + phone + '\n';
+    if (msg) text += 'Mensagem: ' + msg + '\n';
 
     var btnText = form.querySelector('.btn span');
     var original = btnText.textContent;
+    btnText.textContent = 'Enviando...';
 
-    btnText.textContent = 'Enviado!';
-    form.reset();
-
-    var msg = document.getElementById('formSuccess');
-    msg.classList.add('visible');
+    var successMsg = document.getElementById('formSuccess');
+    successMsg.classList.add('visible');
 
     setTimeout(function () {
+      var url = 'https://wa.me/5547984124293?text=' + encodeURIComponent(text);
+      window.open(url, '_blank');
+      form.reset();
       btnText.textContent = original;
-      msg.classList.remove('visible');
-    }, 4000);
+      successMsg.classList.remove('visible');
+    }, 800);
+  });
+}
+
+/* BACK TO TOP */
+function initBackTop() {
+  var btn = document.getElementById('backTop');
+  if (!btn) return;
+
+  window.addEventListener('scroll', function () {
+    if (window.scrollY > 600) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
 /* ANIMATIONS */
 function initAnimations() {
-  // Hero entrance
   var tl = gsap.timeline({ delay: 0.1 });
 
   tl
@@ -175,12 +186,10 @@ function initAnimations() {
     .from('#heroDesc', { opacity: 0, y: 20, duration: 0.8, ease: 'power3.out' }, '-=0.5')
     .from('#heroActions', { opacity: 0, y: 15, duration: 0.7, ease: 'power3.out' }, '-=0.4');
 
-  // Hero bg slow zoom
   setTimeout(function () {
     document.querySelector('.hero').classList.add('loaded');
   }, 100);
 
-  // Hero parallax
   gsap.to('.hero-bg', {
     yPercent: 15,
     ease: 'none',
@@ -192,7 +201,6 @@ function initAnimations() {
     }
   });
 
-  // Scroll reveals
   gsap.utils.toArray('.reveal').forEach(function (el) {
     gsap.fromTo(el,
       { opacity: 0, y: 30 },
@@ -233,7 +241,6 @@ function initAnimations() {
     );
   });
 
-  // Cards — stagger
   var cards = gsap.utils.toArray('.reveal-scale');
   if (cards.length) {
     gsap.fromTo(cards,
@@ -251,7 +258,6 @@ function initAnimations() {
     );
   }
 
-  // Stats
   gsap.utils.toArray('.stat-num').forEach(function (el) {
     gsap.fromTo(el,
       { opacity: 0, y: 20 },
@@ -265,10 +271,19 @@ function initAnimations() {
   });
 }
 
-/* GALLERY FILTER */
+/* GALLERY FILTER + COUNTER */
 function initGalleryFilter() {
   var btns = document.querySelectorAll('.filter-btn');
   var items = document.querySelectorAll('.galeria-item');
+  var counter = document.getElementById('galeriaCounter');
+  var total = items.length;
+
+  function updateCounter() {
+    var visible = document.querySelectorAll('.galeria-item:not(.hidden)').length;
+    if (counter) counter.textContent = 'Mostrando ' + visible + ' de ' + total;
+  }
+
+  updateCounter();
 
   btns.forEach(function (btn) {
     btn.addEventListener('click', function () {
@@ -283,11 +298,13 @@ function initGalleryFilter() {
           item.classList.add('hidden');
         }
       });
+
+      updateCounter();
     });
   });
 }
 
-/* LIGHTBOX */
+/* LIGHTBOX — with focus trap + swipe */
 function initLightbox() {
   var lightbox = document.getElementById('lightbox');
   var lbImg = document.getElementById('lightboxImg');
@@ -297,6 +314,8 @@ function initLightbox() {
   var items = document.querySelectorAll('.galeria-item');
   var currentIndex = 0;
   var visibleItems = [];
+  var touchStartX = 0;
+  var touchEndX = 0;
 
   function getVisibleItems() {
     visibleItems = [];
@@ -316,6 +335,7 @@ function initLightbox() {
     lightbox.classList.add('active');
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    closeBtn.focus();
   }
 
   function closeLightbox() {
@@ -338,7 +358,7 @@ function initLightbox() {
     lbImg.alt = img.alt;
   }
 
-  items.forEach(function (item, i) {
+  items.forEach(function (item) {
     item.addEventListener('click', function () {
       getVisibleItems();
       var visIndex = visibleItems.indexOf(item);
@@ -354,12 +374,49 @@ function initLightbox() {
     if (e.target === lightbox) closeLightbox();
   });
 
-  document.addEventListener('keydown', function (e) {
+  /* Focus trap */
+  lightbox.addEventListener('keydown', function (e) {
     if (!lightbox.classList.contains('active')) return;
-    if (e.key === 'Escape') closeLightbox();
-    if (e.key === 'ArrowLeft') showPrev();
-    if (e.key === 'ArrowRight') showNext();
+
+    if (e.key === 'Escape') {
+      closeLightbox();
+      return;
+    }
+    if (e.key === 'ArrowLeft') { showPrev(); return; }
+    if (e.key === 'ArrowRight') { showNext(); return; }
+
+    if (e.key === 'Tab') {
+      var focusables = [closeBtn, prevBtn, nextBtn];
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
   });
+
+  /* Mobile swipe */
+  lightbox.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', function (e) {
+    touchEndX = e.changedTouches[0].screenX;
+    var diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) showNext();
+      else showPrev();
+    }
+  }, { passive: true });
 }
 
 /* INIT */
@@ -369,6 +426,7 @@ function initAll() {
   initMenu();
   initMarquee();
   initForm();
+  initBackTop();
   initAnimations();
   initGalleryFilter();
   initLightbox();
