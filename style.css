@@ -937,6 +937,179 @@ img { display: block; max-width: 100%; }
 .wa svg { width: 24px; height: 24px; fill: #fff; }
 
 /* ============================================
+   GALERIA
+   ============================================ */
+.galeria { background: var(--bg); }
+
+.galeria-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--gray);
+  font-weight: 300;
+  margin-top: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.galeria-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--gray-dark);
+  color: var(--gray);
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 0.6rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.4s var(--ease);
+}
+
+.filter-btn:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+.filter-btn.active {
+  background: var(--orange);
+  border-color: var(--orange);
+  color: var(--bg);
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.galeria-item {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3/4;
+  cursor: pointer;
+  background: var(--bg-card);
+}
+
+.galeria-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease), filter 0.5s;
+}
+
+.galeria-item:hover img {
+  transform: scale(1.06);
+  filter: brightness(0.7);
+}
+
+.galeria-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(8, 9, 8, 0.85) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+
+.galeria-item:hover .galeria-overlay { opacity: 1; }
+
+.galeria-overlay span {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.galeria-item.hidden {
+  display: none;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  background: rgba(8, 9, 8, 0.96);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s, visibility 0.4s;
+}
+
+.lightbox.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 85vh;
+}
+
+.lightbox-content img {
+  max-width: 100%;
+  max-height: 85vh;
+  object-fit: contain;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 2rem;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 2;
+}
+
+.lightbox-close:hover { color: var(--orange); }
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.lightbox-prev { left: 1.5rem; }
+.lightbox-next { right: 1.5rem; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
+/* ============================================
    REVEAL
    ============================================ */
 .reveal { opacity: 0; transform: translateY(30px); }
@@ -988,6 +1161,7 @@ img { display: block; max-width: 100%; }
   .nav-links.open li:nth-child(2) { animation-delay: 0.08s; }
   .nav-links.open li:nth-child(3) { animation-delay: 0.12s; }
   .nav-links.open li:nth-child(4) { animation-delay: 0.16s; }
+  .nav-links.open li:nth-child(5) { animation-delay: 0.20s; }
 
   @keyframes itemFade {
     from { opacity: 0; transform: translateX(-8px); }
@@ -1073,6 +1247,19 @@ img { display: block; max-width: 100%; }
   .contact-list { gap: 1rem; margin-top: 2rem; }
   .socials { gap: 0.5rem; margin-top: 1.5rem; }
   .social { width: 40px; height: 40px; }
+
+  .galeria-filters { gap: 0.4rem; margin-bottom: 2rem; }
+  .filter-btn { font-size: 0.55rem; padding: 0.5rem 1rem; }
+  .galeria-grid { grid-template-columns: repeat(2, 1fr); }
+  .galeria-item { aspect-ratio: 3/4; }
+  .galeria-overlay { padding: 1rem; }
+  .galeria-overlay span { font-size: 0.65rem; }
+
+  .lightbox-prev,
+  .lightbox-next { width: 36px; height: 36px; font-size: 1.5rem; }
+  .lightbox-prev { left: 0.8rem; }
+  .lightbox-next { right: 0.8rem; }
+  .lightbox-close { top: 1rem; right: 1rem; font-size: 1.5rem; }
 
   .field input, .field textarea { font-size: 16px; }
   .form .btn { width: 100%; justify-content: center; min-height: 48px; }
