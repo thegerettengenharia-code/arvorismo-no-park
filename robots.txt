@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thegerettengenharia-code.github.io/arvorismo-no-park/sitemap.xml

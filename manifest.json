@@ -1,0 +1,16 @@
+{
+  "name": "Arvorismo no Park",
+  "short_name": "Arvorismo",
+  "description": "Projetos e execução em arvorismo profissional",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0b0a",
+  "theme_color": "#0a0b0a",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
